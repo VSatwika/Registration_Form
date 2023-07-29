@@ -1,17 +1,16 @@
 let userForm = document.getElementById("user-form");
 let userEntries=[];
-let errors=[]
-const retieveEntries = ()=>{
-    let entries = localStorage.getItem('userEntries')
+const retrieveEntries = ()=>{
+    let entries = localStorage.getItem('userEntries');
     if(entries){
-        entries=JSON.parse(entries)
+        entries=JSON.parse(entries);
     }else{
-        entries=[]
+        entries=[];
     }
-    return entries
-}
+    return entries;
+};
 const displayEntries = () => {
-  let entries = retieveEntries();
+  let entries = retrieveEntries();
   const tableEntries = entries
     .map((input) => {
       const namedata = `<td class='border px-4 py-2'>${input.FullName}</td>`;
@@ -30,7 +29,6 @@ const displayEntries = () => {
 
 const saveUserForm = (event)=>{
 event.preventDefault();
-localStorage.removeItem('userEntries');
 const FullName = document.getElementById('name').value
 const email = document.getElementById('email').value
 const password = document.getElementById('password').value
@@ -40,7 +38,7 @@ var currentYear = new Date().getFullYear();
 var birthYear = dob.split("-");
 let year=birthYear[0]
 var age = currentYear-year
-console.log({age,currentYear,birthYear})
+console.log({age,currentYear,birthYear});
 if(age < 18 || age > 55){
     document.getElementById('dob')
   return  alert("Age must be between 18 and 55")
@@ -57,12 +55,13 @@ else
         password,
         dob,
         terms
-     }
+     };
+     userEntries = retrieveEntries();
      userEntries.push(input);
-     localStorage.setItem("userEntries",JSON.stringify(userEntries))
-    displayEntries()
-    userForm.reset()
+     localStorage.setItem("userEntries",JSON.stringify(userEntries));
+     displayEntries();
+     userForm.reset();
 }
-}
+};
 userForm.addEventListener('submit',saveUserForm)
 displayEntries()
